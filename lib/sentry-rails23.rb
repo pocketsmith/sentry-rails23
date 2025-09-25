@@ -93,11 +93,7 @@ module Sentry
             alias_method :rescue_action_locally_without_sentry, :rescue_action_locally
 
             def rescue_action_locally(exception)
-              # Capture exception to Sentry (if enabled for development)
-              current_env = Sentry::Rails23.rails_env
-              if Sentry.configuration.enabled_environments.include?(current_env)
-                Sentry::Rails23.capture_exception(exception, env: request.env)
-              end
+              Sentry::Rails23.capture_exception(exception, env: request.env)
 
               # Call original handler
               rescue_action_locally_without_sentry(exception)
