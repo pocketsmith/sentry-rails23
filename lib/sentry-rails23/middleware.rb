@@ -72,10 +72,20 @@ module Sentry
           if controller.respond_to?(:current_user)
             user = controller.current_user
             if user
+              if user.respond_to?(:email)
+                email = user.email
+              end
+
+              if user.respond_to?(:username)
+                username = user.username
+              elsif user.respond_to?(:login)
+                username = user.login
+              end
+
               scope.set_user(
                 id: user.id,
-                username: user.respond_to?(:username) ? user.username : nil,
-                email: user.respond_to?(:email) ? user.email : nil
+                username: username,
+                email: email
               )
             end
           end

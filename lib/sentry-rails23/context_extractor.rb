@@ -44,6 +44,7 @@ module Sentry
 
         # Add optional user attributes
         user_context[:username] = user.username if user.respond_to?(:username)
+        user_context[:username] = user.login if user.respond_to?(:login)
         user_context[:email] = user.email if user.respond_to?(:email)
         user_context[:name] = user.name if user.respond_to?(:name)
 
